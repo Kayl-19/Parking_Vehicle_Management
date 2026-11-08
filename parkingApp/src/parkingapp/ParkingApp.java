@@ -375,3 +375,30 @@ public class ParkingApp extends javax.swing.JFrame {
         }
     }
 
+    private void performSearch() {
+        String query = txtSearch.getText().trim();
+        if (query.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter a search query.",
+                    "Input Required", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Vehicle result = parkingList.search(query);
+        if (result != null) {
+            refreshTableData(new Vehicle[]{result});
+            lblStatus.setText(" Status: Found vehicle '" + query + "'");
+            lblStatus.setForeground(new Color(0, 128, 0));
+        } else {
+            tableModel.setRowCount(0);
+            lblStatus.setText(" Status: No match found for '" + query + "'");
+            lblStatus.setForeground(Color.RED);
+        }
+    }
+
+    private void clearInputs() {
+        txtPlate.setText("");
+        txtOwner.setText("");
+        txtSpot.setText("");
+        txtNotes.setText("");
+    }
+
