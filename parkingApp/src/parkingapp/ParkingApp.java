@@ -55,3 +55,12 @@ public class ParkingApp extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Parking Vehicle Management System");
 
+        searchPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Search Vehicle"));
+        searchPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 10));
+
+        lblSearch.setText("Plate / Spot / Owner / Type:");
+        searchPanel.add(lblSearch);
+
+        txtSearch.setColumns(15);
+        searchPanel.add(txtSearch);
+
