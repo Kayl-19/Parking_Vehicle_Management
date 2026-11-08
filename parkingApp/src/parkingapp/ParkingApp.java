@@ -310,3 +310,68 @@ public class ParkingApp extends javax.swing.JFrame {
         }
     }
 
+    private void addRecord() {
+        String plate = txtPlate.getText().trim();
+        String owner = txtOwner.getText().trim();
+        String spot = txtSpot.getText().trim();
+        String selectedType = (String) cbType.getSelectedItem();
+        String notes = txtNotes.getText().trim();
+
+        if (selectedType == null || selectedType.equals("+ Add New Type...")) {
+            JOptionPane.showMessageDialog(this, "Please select or add a valid vehicle type.",
+                    "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (plate.isEmpty() || owner.isEmpty() || spot.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Plate Number, Owner Name, and Spot ID are required fields.",
+                    "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (notes.isEmpty()) {
+            notes = "N/A";
+        }
+
+        if (selectedType.equals("Car")) {
+            parkingList.add(new Car(plate, owner, spot, notes));
+        } else if (selectedType.equals("Motorcycle")) {
+            parkingList.add(new Motorcycle(plate, owner, spot, notes));
+        } else {
+            parkingList.add(new CustomVehicle(plate, owner, spot, selectedType, notes));
+        }
+
+        refreshTableData(parkingList.toArray());
+        clearInputs();
+        lblStatus.setText(" Status: Parked " + selectedType + " (" + plate + ")");
+        lblStatus.setForeground(new Color(0, 128, 0));
+    }
+
+    private void deleteRecord() {
+        int selectedRow = tableRecords.getSelectedRow();
+        String plateToRemove;
+
+        if (selectedRow != -1) {
+            plateToRemove = tableModel.getValueAt(selectedRow, 0).toString();
+        } else {
+            plateToRemove = txtPlate.getText().trim();
+        }
+
+        if (plateToRemove.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select a row or enter a Plate Number to unpark.",
+                    "Selection Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        boolean removed = parkingList.removeByPlate(plateToRemove);
+        if (removed) {
+            refreshTableData(parkingList.toArray());
+            clearInputs();
+            lblStatus.setText(" Status: Unparked Vehicle " + plateToRemove);
+            lblStatus.setForeground(Color.BLUE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Plate Number not found in system.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
