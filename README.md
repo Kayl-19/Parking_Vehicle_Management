@@ -11,3 +11,12 @@ A Java desktop application for managing parked vehicles, built as a NetBeans pro
 ## Project layout
 
 - `parkingApp/src/parkingapp/ParkingData.java`: vehicle classes and the linked list
+
+## Checking the linked list
+
+The linked list can be tested without the GUI:
+
+```
+javac -d out parkingApp/src/parkingapp/ParkingData.java parkingApp/test/parkingapp/LinkedListCheck.java
+java -cp out parkingapp.LinkedListCheck
+```
