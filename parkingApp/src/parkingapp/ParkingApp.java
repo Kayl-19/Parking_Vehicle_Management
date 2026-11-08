@@ -64,3 +64,19 @@ public class ParkingApp extends javax.swing.JFrame {
         txtSearch.setColumns(15);
         searchPanel.add(txtSearch);
 
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        searchPanel.add(btnSearch);
+
+        btnShowAll.setText("Show All");
+        btnShowAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowAllActionPerformed(evt);
+            }
+        });
+        searchPanel.add(btnShowAll);
+
