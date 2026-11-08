@@ -50,3 +50,17 @@ class Motorcycle extends Vehicle {
     }
 }
 
+class CustomVehicle extends Vehicle {
+    private String customType;
+
+    public CustomVehicle(String plateNumber, String ownerName, String spotId, String customType, String notes) {
+        super(plateNumber, ownerName, spotId, notes);
+        this.customType = customType;
+    }
+
+    @Override
+    public String getVehicleType() {
+        return customType;
+    }
+}
+
