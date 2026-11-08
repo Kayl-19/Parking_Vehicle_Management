@@ -245,3 +245,30 @@ public class ParkingApp extends javax.swing.JFrame {
         pack();
     }
 
+    private void cbTypeActionPerformed(java.awt.event.ActionEvent evt) {
+        String selected = (String) cbType.getSelectedItem();
+        if (selected != null && selected.equals("+ Add New Type...")) {
+            promptAddNewType();
+        }
+    }
+
+    private void btnAddTypeActionPerformed(java.awt.event.ActionEvent evt) {
+        promptAddNewType();
+    }
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {
+        addRecord();
+    }
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+        deleteRecord();
+    }
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {
+        performSearch();
+    }
+
+    private void btnShowAllActionPerformed(java.awt.event.ActionEvent evt) {
+        refreshTableData(parkingList.toArray());
+    }
+
