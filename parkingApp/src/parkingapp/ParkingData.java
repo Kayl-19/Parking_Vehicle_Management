@@ -162,3 +162,7 @@ class CustomDoublyLinkedList {
         return array;
     }
 
+    public int getSize() {
+        return size;
+    }
+}
