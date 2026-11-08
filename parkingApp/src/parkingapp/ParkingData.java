@@ -76,3 +76,14 @@ class Node {
     }
 }
 
+class CustomDoublyLinkedList {
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public CustomDoublyLinkedList() {
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+
