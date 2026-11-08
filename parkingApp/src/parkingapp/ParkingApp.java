@@ -272,3 +272,41 @@ public class ParkingApp extends javax.swing.JFrame {
         refreshTableData(parkingList.toArray());
     }
 
+    private void promptAddNewType() {
+        String newType = JOptionPane.showInputDialog(this,
+                "Enter new Vehicle Type (e.g., Van, Scooter, Bus):",
+                "Add Vehicle Type", JOptionPane.QUESTION_MESSAGE);
+
+        if (newType != null && !newType.trim().isEmpty()) {
+            newType = newType.trim();
+
+            for (int i = 0; i < typeModel.getSize(); i++) {
+                if (typeModel.getElementAt(i).equalsIgnoreCase(newType)) {
+                    cbType.setSelectedItem(typeModel.getElementAt(i));
+                    return;
+                }
+            }
+
+            int insertIndex = typeModel.getSize() - 1;
+            typeModel.insertElementAt(newType, insertIndex);
+            cbType.setSelectedItem(newType);
+            lblStatus.setText(" Status: Added new vehicle type '" + newType + "'");
+            lblStatus.setForeground(new Color(0, 128, 0));
+        } else {
+            cbType.setSelectedIndex(0);
+        }
+    }
+
+    private void refreshTableData(Vehicle[] vehicles) {
+        tableModel.setRowCount(0);
+        for (Vehicle v : vehicles) {
+            tableModel.addRow(new Object[]{
+                v.getPlateNumber(),
+                v.getOwnerName(),
+                v.getSpotId(),
+                v.getVehicleType(),
+                v.getNotes()
+            });
+        }
+    }
+
