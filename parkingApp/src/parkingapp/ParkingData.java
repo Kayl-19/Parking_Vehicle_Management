@@ -130,3 +130,8 @@ class CustomDoublyLinkedList {
         return false;
     }
 
+    public Vehicle search(String query) {
+        if (head == null || query == null || query.trim().isEmpty()) {
+            return null;
+        }
+
