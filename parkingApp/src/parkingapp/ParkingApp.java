@@ -218,3 +218,30 @@ public class ParkingApp extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         formPanel.add(btnDelete, gridBagConstraints);
 
+        getContentPane().add(formPanel, java.awt.BorderLayout.WEST);
+
+        scrollRecords.setPreferredSize(new java.awt.Dimension(560, 420));
+
+        tableRecords.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Plate Number", "Owner Name", "Spot ID", "Type", "Notes / Details"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        scrollRecords.setViewportView(tableRecords);
+
+        getContentPane().add(scrollRecords, java.awt.BorderLayout.CENTER);
+
+        pack();
+    }
+
