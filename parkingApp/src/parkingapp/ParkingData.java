@@ -135,3 +135,19 @@ class CustomDoublyLinkedList {
             return null;
         }
 
+        String cleanQuery = query.trim();
+        Node current = head;
+        while (current != null) {
+            if (current.data != null) {
+                if ((current.data.getPlateNumber() != null && current.data.getPlateNumber().equalsIgnoreCase(cleanQuery)) ||
+                    (current.data.getSpotId() != null && current.data.getSpotId().equalsIgnoreCase(cleanQuery)) ||
+                    (current.data.getOwnerName() != null && current.data.getOwnerName().equalsIgnoreCase(cleanQuery)) ||
+                    (current.data.getVehicleType() != null && current.data.getVehicleType().equalsIgnoreCase(cleanQuery))) {
+                    return current.data;
+                }
+            }
+            current = current.next;
+        }
+        return null;
+    }
+
