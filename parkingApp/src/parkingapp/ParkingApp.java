@@ -80,3 +80,9 @@ public class ParkingApp extends javax.swing.JFrame {
         });
         searchPanel.add(btnShowAll);
 
+        lblStatus.setFont(new java.awt.Font("SansSerif", 1, 12));
+        lblStatus.setText(" Status: Ready");
+        searchPanel.add(lblStatus);
+
+        getContentPane().add(searchPanel, java.awt.BorderLayout.NORTH);
+
