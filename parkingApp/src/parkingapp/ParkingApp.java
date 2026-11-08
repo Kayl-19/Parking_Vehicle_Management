@@ -86,3 +86,22 @@ public class ParkingApp extends javax.swing.JFrame {
 
         getContentPane().add(searchPanel, java.awt.BorderLayout.NORTH);
 
+        formPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Park New Vehicle"));
+        formPanel.setLayout(new java.awt.GridBagLayout());
+
+        lblPlate.setText("Plate Number:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        formPanel.add(lblPlate, gridBagConstraints);
+
+        txtPlate.setColumns(12);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        formPanel.add(txtPlate, gridBagConstraints);
+
