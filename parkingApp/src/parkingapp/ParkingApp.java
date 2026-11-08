@@ -25,3 +25,33 @@ public class ParkingApp extends javax.swing.JFrame {
         refreshTableData(parkingList.toArray());
     }
 
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        searchPanel = new javax.swing.JPanel();
+        lblSearch = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
+        btnShowAll = new javax.swing.JButton();
+        lblStatus = new javax.swing.JLabel();
+        formPanel = new javax.swing.JPanel();
+        lblPlate = new javax.swing.JLabel();
+        txtPlate = new javax.swing.JTextField();
+        lblOwner = new javax.swing.JLabel();
+        txtOwner = new javax.swing.JTextField();
+        lblSpot = new javax.swing.JLabel();
+        txtSpot = new javax.swing.JTextField();
+        lblType = new javax.swing.JLabel();
+        cbType = new javax.swing.JComboBox<>();
+        lblNotes = new javax.swing.JLabel();
+        txtNotes = new javax.swing.JTextField();
+        btnAddType = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        scrollRecords = new javax.swing.JScrollPane();
+        tableRecords = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Parking Vehicle Management System");
+
