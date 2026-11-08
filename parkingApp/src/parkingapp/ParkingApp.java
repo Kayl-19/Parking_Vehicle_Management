@@ -402,3 +402,34 @@ public class ParkingApp extends javax.swing.JFrame {
         txtNotes.setText("");
     }
 
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ParkingApp().setVisible(true);
+            }
+        });
+    }
+
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAddType;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnShowAll;
+    private javax.swing.JComboBox<String> cbType;
+    private javax.swing.JPanel formPanel;
+    private javax.swing.JLabel lblNotes;
+    private javax.swing.JLabel lblOwner;
+    private javax.swing.JLabel lblPlate;
+    private javax.swing.JLabel lblSearch;
+    private javax.swing.JLabel lblSpot;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblType;
+    private javax.swing.JScrollPane scrollRecords;
+    private javax.swing.JPanel searchPanel;
+    private javax.swing.JTable tableRecords;
+    private javax.swing.JTextField txtNotes;
+    private javax.swing.JTextField txtOwner;
+    private javax.swing.JTextField txtPlate;
+    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtSpot;
+}
