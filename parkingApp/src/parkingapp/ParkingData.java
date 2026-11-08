@@ -100,3 +100,8 @@ class CustomDoublyLinkedList {
         size++;
     }
 
+    public boolean removeByPlate(String plateNumber) {
+        if (head == null || plateNumber == null || plateNumber.trim().isEmpty()) {
+            return false;
+        }
+
