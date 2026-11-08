@@ -110,3 +110,9 @@ class CustomDoublyLinkedList {
             if (current.data != null && current.data.getPlateNumber() != null &&
                 current.data.getPlateNumber().equalsIgnoreCase(plateNumber.trim())) {
 
+                if (current.prev != null) {
+                    current.prev.next = current.next;
+                } else {
+                    head = current.next;
+                }
+
