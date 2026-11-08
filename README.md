@@ -20,3 +20,17 @@ The linked list can be tested without the GUI:
 javac -d out parkingApp/src/parkingapp/ParkingData.java parkingApp/test/parkingapp/LinkedListCheck.java
 java -cp out parkingapp.LinkedListCheck
 ```
+
+## IT24: GUI
+
+`ParkingApp` is a Swing `JFrame` with a NetBeans form (`ParkingApp.form`), so its layout can be edited in the Design view.
+
+- Park a vehicle with plate number, owner, spot ID, type and notes.
+- Unpark by selecting a row in the table or typing a plate number.
+- Search by plate, spot, owner or type, and use Show All to restore the full table.
+- Add new vehicle types at runtime from the type combo box or the Manage/Add button.
+- Required fields and invalid choices show validation dialogs, and the status label reports the last action.
+
+## Running
+
+Open the `parkingApp` folder as a project in NetBeans and run it. The main class is `parkingapp.ParkingApp`.
