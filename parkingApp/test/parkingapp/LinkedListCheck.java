@@ -42,8 +42,41 @@ public class LinkedListCheck {
                 && all[2].getVehicleType().equals("Truck"));
     }
 
+    private static void checkRemove() {
+        CustomDoublyLinkedList list = sampleList();
+        check("remove middle node", list.removeByPlate("xyz-9876") && list.getSize() == 2);
+        check("middle node is gone", list.search("XYZ-9876") == null);
+        check("neighbours stay linked",
+                list.toArray()[0].getPlateNumber().equals("ABC-1234")
+                && list.toArray()[1].getPlateNumber().equals("TRK-5555"));
+
+        check("remove head node", list.removeByPlate("ABC-1234") && list.getSize() == 1);
+        check("remove tail node (last one)", list.removeByPlate("TRK-5555") && list.getSize() == 0);
+        check("list is empty again", list.toArray().length == 0);
+
+        list.add(new Car("NEW-0001", "Ann", "D-01", "Hatchback"));
+        check("add() works after emptying the list", list.getSize() == 1);
+
+        check("remove missing plate returns false", !list.removeByPlate("NOPE-000"));
+        check("remove blank plate returns false", !list.removeByPlate("  "));
+        check("remove null plate returns false", !list.removeByPlate(null));
+    }
+
+    private static void checkSearch() {
+        CustomDoublyLinkedList list = sampleList();
+        check("search by plate", list.search("abc-1234") != null);
+        check("search by spot", list.search("B-12").getOwnerName().equals("Jane Smith"));
+        check("search by owner", list.search("mark wilson").getPlateNumber().equals("TRK-5555"));
+        check("search by type", list.search("Motorcycle").getPlateNumber().equals("XYZ-9876"));
+        check("search with no match returns null", list.search("nothing") == null);
+        check("search with blank query returns null", list.search("   ") == null);
+        check("search on empty list returns null", new CustomDoublyLinkedList().search("ABC-1234") == null);
+    }
+
     public static void main(String[] args) {
         checkAddAndArray();
+        checkRemove();
+        checkSearch();
         finish();
     }
 
