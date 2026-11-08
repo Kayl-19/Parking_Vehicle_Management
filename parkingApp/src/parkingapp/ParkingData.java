@@ -28,3 +28,14 @@ abstract class Vehicle {
     public abstract String getVehicleType();
 }
 
+class Car extends Vehicle {
+    public Car(String plateNumber, String ownerName, String spotId, String notes) {
+        super(plateNumber, ownerName, spotId, notes);
+    }
+
+    @Override
+    public String getVehicleType() {
+        return "Car";
+    }
+}
+
