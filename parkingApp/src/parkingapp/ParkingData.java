@@ -87,3 +87,16 @@ class CustomDoublyLinkedList {
         this.size = 0;
     }
 
+    public void add(Vehicle vehicle) {
+        Node newNode = new Node(vehicle);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+        size++;
+    }
+
