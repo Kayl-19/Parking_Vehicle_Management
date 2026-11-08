@@ -116,3 +116,17 @@ class CustomDoublyLinkedList {
                     head = current.next;
                 }
 
+                if (current.next != null) {
+                    current.next.prev = current.prev;
+                } else {
+                    tail = current.prev;
+                }
+
+                size--;
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
