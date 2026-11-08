@@ -105,3 +105,8 @@ class CustomDoublyLinkedList {
             return false;
         }
 
+        Node current = head;
+        while (current != null) {
+            if (current.data != null && current.data.getPlateNumber() != null &&
+                current.data.getPlateNumber().equalsIgnoreCase(plateNumber.trim())) {
+
