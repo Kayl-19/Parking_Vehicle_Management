@@ -6,11 +6,14 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 public class ParkingApp extends javax.swing.JFrame {
 
     private final CustomDoublyLinkedList parkingList = new CustomDoublyLinkedList();
+    private final CustomDoublyLinkedList exitHistory = new CustomDoublyLinkedList();
     private DefaultTableModel tableModel;
     private DefaultComboBoxModel<String> typeModel;
 
@@ -61,6 +64,7 @@ public class ParkingApp extends javax.swing.JFrame {
         btnAddType = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        btnHistory = new javax.swing.JButton();
         scrollRecords = new javax.swing.JScrollPane();
         tableRecords = new javax.swing.JTable();
 
@@ -225,10 +229,24 @@ public class ParkingApp extends javax.swing.JFrame {
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        formPanel.add(btnExit, gridBagConstraints);
+
+        btnHistory.setText("Exit History & Revenue");
+        btnHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoryActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        formPanel.add(btnExit, gridBagConstraints);
+        formPanel.add(btnHistory, gridBagConstraints);
 
         getContentPane().add(formPanel, java.awt.BorderLayout.WEST);
 
@@ -274,6 +292,10 @@ public class ParkingApp extends javax.swing.JFrame {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {
         recordExit();
+    }
+
+    private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {
+        showExitHistory();
     }
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {
@@ -397,6 +419,7 @@ public class ParkingApp extends javax.swing.JFrame {
         double fee = ParkingFee.calculate(vehicle.getVehicleType(), vehicle.getEntryTime(), exitTime);
         vehicle.recordExit(exitTime, fee);
         parkingList.removeByPlate(vehicle.getPlateNumber());
+        exitHistory.add(vehicle);
 
         refreshTableData(parkingList.toArray());
         clearInputs();
@@ -421,6 +444,32 @@ public class ParkingApp extends javax.swing.JFrame {
 
     private String formatMoney(double amount) {
         return String.format(java.util.Locale.US, "PHP %,.2f", amount);
+    }
+
+    private void showExitHistory() {
+        Vehicle[] exited = exitHistory.toArray();
+        if (exited.length == 0) {
+            JOptionPane.showMessageDialog(this, "No vehicles have exited yet.",
+                    "Exit History", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        StringBuilder text = new StringBuilder();
+        double total = 0;
+        for (Vehicle v : exited) {
+            text.append(v.getPlateNumber()).append(" | ")
+                    .append(v.getVehicleType()).append(" | ")
+                    .append(ParkingFee.formatDuration(v.getEntryTime(), v.getExitTime())).append(" | ")
+                    .append(formatMoney(v.getFee())).append("\n");
+            total += v.getFee();
+        }
+        text.append("\nVehicles exited: ").append(exited.length);
+        text.append("\nTotal collected: ").append(formatMoney(total));
+
+        JTextArea area = new JTextArea(text.toString(), 12, 40);
+        area.setEditable(false);
+        JOptionPane.showMessageDialog(this, new JScrollPane(area),
+                "Exit History & Revenue", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void performSearch() {
@@ -461,6 +510,7 @@ public class ParkingApp extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAddType;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnHistory;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnShowAll;
     private javax.swing.JComboBox<String> cbType;
