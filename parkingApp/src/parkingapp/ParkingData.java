@@ -5,6 +5,7 @@ abstract class Vehicle {
     private String ownerName;
     private String spotId;
     private String notes;
+    private long entryTime = System.currentTimeMillis();
 
     public Vehicle(String plateNumber, String ownerName, String spotId, String notes) {
         this.plateNumber = plateNumber;
@@ -24,6 +25,9 @@ abstract class Vehicle {
 
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
+
+    public long getEntryTime() { return entryTime; }
+    public void setEntryTime(long entryTime) { this.entryTime = entryTime; }
 
     public abstract String getVehicleType();
 }
