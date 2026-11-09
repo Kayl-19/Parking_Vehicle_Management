@@ -6,6 +6,8 @@ abstract class Vehicle {
     private String spotId;
     private String notes;
     private long entryTime = System.currentTimeMillis();
+    private long exitTime = 0;
+    private double fee = 0;
 
     public Vehicle(String plateNumber, String ownerName, String spotId, String notes) {
         this.plateNumber = plateNumber;
@@ -28,6 +30,15 @@ abstract class Vehicle {
 
     public long getEntryTime() { return entryTime; }
     public void setEntryTime(long entryTime) { this.entryTime = entryTime; }
+
+    public long getExitTime() { return exitTime; }
+    public double getFee() { return fee; }
+    public boolean isParked() { return exitTime == 0; }
+
+    public void recordExit(long exitTime, double fee) {
+        this.exitTime = exitTime;
+        this.fee = fee;
+    }
 
     public abstract String getVehicleType();
 }
