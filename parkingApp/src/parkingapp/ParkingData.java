@@ -198,3 +198,19 @@ class CustomDoublyLinkedList {
         return size;
     }
 }
+
+class ParkingFee {
+    public static final double CAR_RATE = 50.0;
+    public static final double MOTORCYCLE_RATE = 30.0;
+    public static final double OTHER_RATE = 70.0;
+
+    public static double getHourlyRate(String vehicleType) {
+        if ("Car".equalsIgnoreCase(vehicleType)) {
+            return CAR_RATE;
+        }
+        if ("Motorcycle".equalsIgnoreCase(vehicleType)) {
+            return MOTORCYCLE_RATE;
+        }
+        return OTHER_RATE;
+    }
+}
