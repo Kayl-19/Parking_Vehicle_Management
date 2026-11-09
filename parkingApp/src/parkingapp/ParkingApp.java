@@ -24,11 +24,17 @@ public class ParkingApp extends javax.swing.JFrame {
         typeModel = (DefaultComboBoxModel<String>) cbType.getModel();
         setLocationRelativeTo(null);
 
-        parkingList.add(new Car("ABC-1234", "John Doe", "A-01", "Sedan - Blue"));
-        parkingList.add(new Motorcycle("XYZ-9876", "Jane Smith", "B-12", "150cc Helmet Included"));
-        parkingList.add(new CustomVehicle("TRK-5555", "Mark Wilson", "C-09", "Truck", "Heavy Duty"));
+        parkingList.add(sampleVehicle(new Car("ABC-1234", "John Doe", "A-01", "Sedan - Blue"), 150));
+        parkingList.add(sampleVehicle(new Motorcycle("XYZ-9876", "Jane Smith", "B-12", "150cc Helmet Included"), 45));
+        parkingList.add(sampleVehicle(new CustomVehicle("TRK-5555", "Mark Wilson", "C-09", "Truck", "Heavy Duty"), 200));
 
         refreshTableData(parkingList.toArray());
+    }
+
+    // Backdates a sample vehicle so the fee is easy to see when it exits.
+    private Vehicle sampleVehicle(Vehicle vehicle, int minutesAgo) {
+        vehicle.setEntryTime(System.currentTimeMillis() - minutesAgo * 60000L);
+        return vehicle;
     }
 
     @SuppressWarnings("unchecked")
