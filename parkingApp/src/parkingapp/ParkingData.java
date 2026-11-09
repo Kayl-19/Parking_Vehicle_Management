@@ -145,6 +145,23 @@ class CustomDoublyLinkedList {
         return false;
     }
 
+    public Vehicle findByPlate(String plateNumber) {
+        if (head == null || plateNumber == null || plateNumber.trim().isEmpty()) {
+            return null;
+        }
+
+        String cleanPlate = plateNumber.trim();
+        Node current = head;
+        while (current != null) {
+            if (current.data != null && current.data.getPlateNumber() != null
+                    && current.data.getPlateNumber().equalsIgnoreCase(cleanPlate)) {
+                return current.data;
+            }
+            current = current.next;
+        }
+        return null;
+    }
+
     public Vehicle search(String query) {
         if (head == null || query == null || query.trim().isEmpty()) {
             return null;
