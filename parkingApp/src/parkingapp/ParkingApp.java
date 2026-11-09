@@ -2,6 +2,9 @@ package parkingapp;
 
 import java.awt.Color;
 import javax.swing.DefaultComboBoxModel;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -10,6 +13,9 @@ public class ParkingApp extends javax.swing.JFrame {
     private final CustomDoublyLinkedList parkingList = new CustomDoublyLinkedList();
     private DefaultTableModel tableModel;
     private DefaultComboBoxModel<String> typeModel;
+
+    private static final DateTimeFormatter TIME_FORMAT
+            = DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a").withZone(ZoneId.systemDefault());
 
     public ParkingApp() {
         initComponents();
@@ -227,11 +233,11 @@ public class ParkingApp extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Plate Number", "Owner Name", "Spot ID", "Type", "Notes / Details"
+                "Plate Number", "Owner Name", "Spot ID", "Type", "Entry Time", "Notes / Details"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -297,6 +303,10 @@ public class ParkingApp extends javax.swing.JFrame {
         }
     }
 
+    private String formatTime(long millis) {
+        return TIME_FORMAT.format(Instant.ofEpochMilli(millis));
+    }
+
     private void refreshTableData(Vehicle[] vehicles) {
         tableModel.setRowCount(0);
         for (Vehicle v : vehicles) {
@@ -305,6 +315,7 @@ public class ParkingApp extends javax.swing.JFrame {
                 v.getOwnerName(),
                 v.getSpotId(),
                 v.getVehicleType(),
+                formatTime(v.getEntryTime()),
                 v.getNotes()
             });
         }
