@@ -346,6 +346,12 @@ public class ParkingApp extends javax.swing.JFrame {
             return;
         }
 
+        if (parkingList.findByPlate(plate) != null) {
+            JOptionPane.showMessageDialog(this, "Plate Number " + plate + " is already parked.",
+                    "Duplicate Plate", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (notes.isEmpty()) {
             notes = "N/A";
         }
