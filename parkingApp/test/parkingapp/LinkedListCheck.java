@@ -73,10 +73,33 @@ public class LinkedListCheck {
         check("search on empty list returns null", new CustomDoublyLinkedList().search("ABC-1234") == null);
     }
 
+    private static void checkExitRecord() {
+        Vehicle v = new Car("EXI-0001", "Ann", "A-02", "Test");
+        check("new vehicle is parked with no exit or fee", v.isParked() && v.getExitTime() == 0 && v.getFee() == 0);
+        check("entry time is set on creation", v.getEntryTime() > 0);
+        v.setEntryTime(5000L);
+        check("entry time can be changed", v.getEntryTime() == 5000L);
+        v.recordExit(9000L, 50.0);
+        check("recordExit() stores exit time and fee", !v.isParked() && v.getExitTime() == 9000L && v.getFee() == 50.0);
+    }
+
+    private static void checkFindByPlate() {
+        CustomDoublyLinkedList list = sampleList();
+        check("findByPlate() ignores case", list.findByPlate("xyz-9876") != null);
+        check("findByPlate() returns the matching vehicle", list.findByPlate("TRK-5555").getOwnerName().equals("Mark Wilson"));
+        check("findByPlate() does not match an owner name", list.findByPlate("John Doe") == null);
+        check("findByPlate() missing plate returns null", list.findByPlate("NOPE-000") == null);
+        check("findByPlate() blank returns null", list.findByPlate("  ") == null);
+        check("findByPlate() null returns null", list.findByPlate(null) == null);
+        check("findByPlate() on empty list returns null", new CustomDoublyLinkedList().findByPlate("ABC-1234") == null);
+    }
+
     public static void main(String[] args) {
         checkAddAndArray();
         checkRemove();
         checkSearch();
+        checkExitRecord();
+        checkFindByPlate();
         finish();
     }
 
