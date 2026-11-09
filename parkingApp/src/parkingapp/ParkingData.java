@@ -224,4 +224,9 @@ class ParkingFee {
     public static double calculate(String vehicleType, long entryTime, long exitTime) {
         return billableHours(entryTime, exitTime) * getHourlyRate(vehicleType);
     }
+
+    public static String formatDuration(long entryTime, long exitTime) {
+        long minutes = Math.max(0L, (exitTime - entryTime) / 60000L);
+        return (minutes / 60) + " h " + (minutes % 60) + " min";
+    }
 }
