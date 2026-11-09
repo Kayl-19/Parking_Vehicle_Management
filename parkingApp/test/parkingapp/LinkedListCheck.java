@@ -94,12 +94,29 @@ public class LinkedListCheck {
         check("findByPlate() on empty list returns null", new CustomDoublyLinkedList().findByPlate("ABC-1234") == null);
     }
 
+    private static void checkFees() {
+        long hour = 3600000L;
+        long t0 = 1000000000000L;
+        check("Car rate is 50 per hour", ParkingFee.getHourlyRate("Car") == 50.0);
+        check("Motorcycle rate is 30 per hour", ParkingFee.getHourlyRate("Motorcycle") == 30.0);
+        check("other types use the 70 rate", ParkingFee.getHourlyRate("Truck") == 70.0);
+        check("10 minutes bills one hour", ParkingFee.calculate("Car", t0, t0 + 10 * 60000L) == 50.0);
+        check("zero time still bills the minimum hour", ParkingFee.calculate("Car", t0, t0) == 50.0);
+        check("exactly 2 hours bills 2 hours", ParkingFee.calculate("Car", t0, t0 + 2 * hour) == 100.0);
+        check("2 h 1 min rounds up to 3 hours", ParkingFee.calculate("Car", t0, t0 + 2 * hour + 60000L) == 150.0);
+        check("motorcycle for 5 hours", ParkingFee.calculate("Motorcycle", t0, t0 + 5 * hour) == 150.0);
+        check("truck for 3 h 20 min bills 4 hours", ParkingFee.calculate("Truck", t0, t0 + 3 * hour + 20 * 60000L) == 280.0);
+        check("duration text", ParkingFee.formatDuration(t0, t0 + 2 * hour + 30 * 60000L).equals("2 h 30 min"));
+        check("duration text under an hour", ParkingFee.formatDuration(t0, t0 + 45 * 60000L).equals("0 h 45 min"));
+    }
+
     public static void main(String[] args) {
         checkAddAndArray();
         checkRemove();
         checkSearch();
         checkExitRecord();
         checkFindByPlate();
+        checkFees();
         finish();
     }
 
