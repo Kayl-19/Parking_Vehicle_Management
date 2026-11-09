@@ -60,7 +60,7 @@ public class ParkingApp extends javax.swing.JFrame {
         txtNotes = new javax.swing.JTextField();
         btnAddType = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         scrollRecords = new javax.swing.JScrollPane();
         tableRecords = new javax.swing.JTable();
 
@@ -214,10 +214,10 @@ public class ParkingApp extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         formPanel.add(btnAdd, gridBagConstraints);
 
-        btnDelete.setText("Unpark Selected/Plate");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+        btnExit.setText("Record Exit & Calculate Fee");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
+                btnExitActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -228,7 +228,7 @@ public class ParkingApp extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        formPanel.add(btnDelete, gridBagConstraints);
+        formPanel.add(btnExit, gridBagConstraints);
 
         getContentPane().add(formPanel, java.awt.BorderLayout.WEST);
 
@@ -272,8 +272,8 @@ public class ParkingApp extends javax.swing.JFrame {
         addRecord();
     }
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-        deleteRecord();
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {
+        recordExit();
     }
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,32 +370,57 @@ public class ParkingApp extends javax.swing.JFrame {
         lblStatus.setForeground(new Color(0, 128, 0));
     }
 
-    private void deleteRecord() {
+    private void recordExit() {
         int selectedRow = tableRecords.getSelectedRow();
-        String plateToRemove;
+        String plate;
 
         if (selectedRow != -1) {
-            plateToRemove = tableModel.getValueAt(selectedRow, 0).toString();
+            plate = tableModel.getValueAt(selectedRow, 0).toString();
         } else {
-            plateToRemove = txtPlate.getText().trim();
+            plate = txtPlate.getText().trim();
         }
 
-        if (plateToRemove.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Select a row or enter a Plate Number to unpark.",
+        if (plate.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select a row or enter a Plate Number to record an exit.",
                     "Selection Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        boolean removed = parkingList.removeByPlate(plateToRemove);
-        if (removed) {
-            refreshTableData(parkingList.toArray());
-            clearInputs();
-            lblStatus.setText(" Status: Unparked Vehicle " + plateToRemove);
-            lblStatus.setForeground(Color.BLUE);
-        } else {
+        Vehicle vehicle = parkingList.findByPlate(plate);
+        if (vehicle == null) {
             JOptionPane.showMessageDialog(this, "Plate Number not found in system.",
                     "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        long exitTime = System.currentTimeMillis();
+        double fee = ParkingFee.calculate(vehicle.getVehicleType(), vehicle.getEntryTime(), exitTime);
+        vehicle.recordExit(exitTime, fee);
+        parkingList.removeByPlate(vehicle.getPlateNumber());
+
+        refreshTableData(parkingList.toArray());
+        clearInputs();
+        lblStatus.setText(" Status: " + vehicle.getPlateNumber() + " exited, fee " + formatMoney(fee));
+        lblStatus.setForeground(Color.BLUE);
+
+        JOptionPane.showMessageDialog(this, buildReceipt(vehicle),
+                "Exit Receipt", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private String buildReceipt(Vehicle v) {
+        return "Plate Number: " + v.getPlateNumber()
+                + "\nOwner: " + v.getOwnerName()
+                + "\nSpot: " + v.getSpotId()
+                + "\nType: " + v.getVehicleType()
+                + "\nEntry: " + formatTime(v.getEntryTime())
+                + "\nExit: " + formatTime(v.getExitTime())
+                + "\nDuration: " + ParkingFee.formatDuration(v.getEntryTime(), v.getExitTime())
+                + "\nRate: " + formatMoney(ParkingFee.getHourlyRate(v.getVehicleType())) + " per hour"
+                + "\nFee: " + formatMoney(v.getFee());
+    }
+
+    private String formatMoney(double amount) {
+        return String.format(java.util.Locale.US, "PHP %,.2f", amount);
     }
 
     private void performSearch() {
@@ -435,7 +460,7 @@ public class ParkingApp extends javax.swing.JFrame {
 
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAddType;
-    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnShowAll;
     private javax.swing.JComboBox<String> cbType;
