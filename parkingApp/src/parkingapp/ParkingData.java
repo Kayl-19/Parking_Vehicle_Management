@@ -213,4 +213,15 @@ class ParkingFee {
         }
         return OTHER_RATE;
     }
+
+    // Every started hour is billed, with a minimum of one hour.
+    public static long billableHours(long entryTime, long exitTime) {
+        long millis = exitTime - entryTime;
+        long hours = (millis + 3599999L) / 3600000L;
+        return Math.max(1L, hours);
+    }
+
+    public static double calculate(String vehicleType, long entryTime, long exitTime) {
+        return billableHours(entryTime, exitTime) * getHourlyRate(vehicleType);
+    }
 }
