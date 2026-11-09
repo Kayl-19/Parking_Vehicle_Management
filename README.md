@@ -26,11 +26,25 @@ java -cp out parkingapp.LinkedListCheck
 `ParkingApp` is a Swing `JFrame` with a NetBeans form (`ParkingApp.form`), so its layout can be edited in the Design view.
 
 - Park a vehicle with plate number, owner, spot ID, type and notes.
-- Unpark by selecting a row in the table or typing a plate number.
-- Search by plate, spot, owner or type, and use Show All to restore the full table.
+- Record an exit by selecting a row in the table or typing a plate number. The fee is calculated and shown on an exit receipt, and the vehicle leaves the parked list.
+- View the exit history and total fees collected with the Exit History & Revenue button.
+- Search by plate number (or spot, owner or type), and use Show All to restore the full table.
+- Each parked vehicle shows its entry time in the table. Registering a plate that is already parked is rejected.
 - Add new vehicle types at runtime from the type combo box or the Manage/Add button.
 - Required fields and invalid choices show validation dialogs, and the status label reports the last action.
 
 ## Running
 
 Open the `parkingApp` folder as a project in NetBeans and run it. The main class is `parkingapp.ParkingApp`.
+
+## Parking fees
+
+Fees are charged per hour, and every started hour is billed with a minimum of one hour.
+
+| Vehicle type | Rate per hour |
+| --- | --- |
+| Car | PHP 50 |
+| Motorcycle | PHP 30 |
+| Other types (Truck and custom types) | PHP 70 |
+
+For example, a car parked for 2 hours 10 minutes is billed 3 hours, which is PHP 150. The rates are defined in `ParkingFee` in `ParkingData.java`.
