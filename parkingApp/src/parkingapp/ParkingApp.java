@@ -19,6 +19,8 @@ public class ParkingApp extends javax.swing.JFrame {
 
     private static final DateTimeFormatter TIME_FORMAT
             = DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm a").withZone(ZoneId.systemDefault());
+    private static final DateTimeFormatter TABLE_TIME_FORMAT
+            = DateTimeFormatter.ofPattern("MMM dd, hh:mm a").withZone(ZoneId.systemDefault());
 
     public ParkingApp() {
         initComponents();
@@ -250,7 +252,7 @@ public class ParkingApp extends javax.swing.JFrame {
 
         getContentPane().add(formPanel, java.awt.BorderLayout.WEST);
 
-        scrollRecords.setPreferredSize(new java.awt.Dimension(560, 420));
+        scrollRecords.setPreferredSize(new java.awt.Dimension(680, 420));
 
         tableRecords.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -335,6 +337,10 @@ public class ParkingApp extends javax.swing.JFrame {
         return TIME_FORMAT.format(Instant.ofEpochMilli(millis));
     }
 
+    private String formatTableTime(long millis) {
+        return TABLE_TIME_FORMAT.format(Instant.ofEpochMilli(millis));
+    }
+
     private void refreshTableData(Vehicle[] vehicles) {
         tableModel.setRowCount(0);
         for (Vehicle v : vehicles) {
@@ -343,7 +349,7 @@ public class ParkingApp extends javax.swing.JFrame {
                 v.getOwnerName(),
                 v.getSpotId(),
                 v.getVehicleType(),
-                formatTime(v.getEntryTime()),
+                formatTableTime(v.getEntryTime()),
                 v.getNotes()
             });
         }
